@@ -4,11 +4,16 @@
   "description": "Projeto de API com foco na competição da formula 1 de 2023",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch ."
   },
   "keywords": [
     "f1-api"
   ],
   "author": "Rudi",
-  "license": "ISC"
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "express": "^4.21.0"
+  }
 }
