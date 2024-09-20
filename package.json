@@ -1,0 +1,14 @@
+{
+  "name": "api-formula1-2023",
+  "version": "1.0.0",
+  "description": "Projeto de API com foco na competição da formula 1 de 2023",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "f1-api"
+  ],
+  "author": "Rudi",
+  "license": "ISC"
+}
