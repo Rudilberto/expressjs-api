@@ -1,9 +1,14 @@
 import express from "express";
-import { drivers } from "./data.js";
+import { drivers, sortDrivers } from "./data.js";
+import { randomUUID } from "node:crypto";
 
 const baseAPIRoute = "/api/v1";
-
 const app = express();
+
+// Em metodos posts, o json vem de maneira codigica para o backend
+// para contornar precisamos do express.json() dentro de um app.use()
+app.use(express.json());
+
 // Endpoint da rota do navegador
 // request e response sempre serao parametros da função app.get
 app.get(baseAPIRoute + "/drivers", (request, resp) => {
@@ -23,6 +28,40 @@ app.get(baseAPIRoute + "/drivers/standings/:position", (request, resp) => {
 app.get(baseAPIRoute + "/drivers/:id", (request, resp) => {
   const { id } = request.params;
   const selectedDriver = drivers.find((driver) => driver.id === id);
+  resp.status(200).send(selectedDriver);
+});
+
+// usando o post
+app.post(baseAPIRoute + "/drivers", (request, resp) => {
+  const newDriver = { ...request.body, id: randomUUID() };
+  drivers.push(newDriver);
+  sortDrivers(drivers);
+  resp.status(200).send(newDriver);
+});
+
+app.put(baseAPIRoute + "/drivers/:id", (request, resp) => {
+  const { id } = request.params;
+  const selectedDriver = drivers.find((driver) => driver.id === id);
+
+  for (const key in selectedDriver) {
+    if (request.body[key]) {
+      selectedDriver[key] = request.body[key];
+    }
+  }
+  sortDrivers(drivers);
+
+  resp.status(200).send(selectedDriver);
+});
+
+app.delete(baseAPIRoute + "/drivers/:id", (request, resp) => {
+  const { id } = request.params;
+  const selectedDriver = drivers.find((driver) => driver.id === id);
+  // indexOf pega o indice do objeto no array
+  const index = drivers.indexOf(selectedDriver);
+  // splice irá retirar o objeto do array a partir do indice informado
+  // sendo array.splice(indiceInicial, quantosObjetosAPartir)
+  drivers.splice(index, 1);
+
   resp.status(200).send(selectedDriver);
 });
 

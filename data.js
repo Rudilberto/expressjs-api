@@ -127,12 +127,18 @@ export const driversInRandomOrder = [
   },
 ];
 
-export const drivers = driversInRandomOrder.sort((b, a) => {
-  if (a.points > b.points) {
-    return 1;
-  }
-  if (b.points > a.points) {
-    return -1;
-  }
-  return 0;
-});
+export function sortDrivers(drivers) {
+  drivers = drivers;
+  drivers.sort((b, a) => {
+    if (a.points > b.points) {
+      return 1;
+    }
+    if (b.points > a.points) {
+      return -1;
+    }
+    return 0;
+  });
+  return drivers;
+}
+
+export const drivers = sortDrivers(driversInRandomOrder);
