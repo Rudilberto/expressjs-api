@@ -127,8 +127,7 @@ export const driversInRandomOrder = [
   },
 ];
 
-export function sortDrivers(drivers) {
-  drivers = drivers;
+export function sortPoints(drivers) {
   drivers.sort((b, a) => {
     if (a.points > b.points) {
       return 1;
@@ -141,4 +140,20 @@ export function sortDrivers(drivers) {
   return drivers;
 }
 
-export const drivers = sortDrivers(driversInRandomOrder);
+export const drivers = sortPoints(driversInRandomOrder);
+
+// acc é o valor acumulado, currentValue é o valor da iteração, o metodo faz uma iteração pela lista/objeto
+// e aplica o função criada, no final
+
+export function generateTeams() {
+  const teamsInRandomOrder = drivers.reduce((acc, currentValue) => {
+    const { team, points } = currentValue;
+
+    const teamObject = acc.find((t) => t.team === team);
+
+    teamObject ? (teamObject.points += points) : acc.push({ team, points });
+    return acc;
+  }, []);
+  const teams = sortPoints(teamsInRandomOrder);
+  return teams;
+}
